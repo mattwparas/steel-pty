@@ -21,5 +21,6 @@ wezterm-term = { git = "https://github.com/mattwparas/wezterm.git", branch = "mw
 config = { git = "https://github.com/mattwparas/wezterm.git", branch = "mwp-public-scroll" }
 parking_lot = "*"
 futures-time = "3.0.0"
-termwiz = { git = "https://github.com/mattwparas/wezterm.git", branch = "mwp-public-scroll" }
 wezterm-cell = { git = "https://github.com/mattwparas/wezterm.git", branch = "mwp-public-scroll" }
+
+wezterm-ssh = { git = "https://github.com/mattwparas/wezterm.git", features = ["vendored-openssl"] }
