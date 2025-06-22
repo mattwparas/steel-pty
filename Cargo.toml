@@ -22,3 +22,4 @@ config = { git = "https://github.com/mattwparas/wezterm.git", branch = "mwp-publ
 parking_lot = "*"
 futures-time = "3.0.0"
 termwiz = { git = "https://github.com/mattwparas/wezterm.git", branch = "mwp-public-scroll" }
+wezterm-cell = { git = "https://github.com/mattwparas/wezterm.git", branch = "mwp-public-scroll" }

@@ -3406,6 +3406,7 @@ dependencies = [
  "steel-core",
  "termwiz",
  "tokio",
+ "wezterm-cell",
  "wezterm-term",
 ]
 
