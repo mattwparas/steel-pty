@@ -348,7 +348,7 @@ checksum = "8b75356056920673b02621b35afd0f7dda9306d03c79a30f5c56c44cf256e3de"
 [[package]]
 name = "async_ossl"
 version = "0.1.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "async-io 2.4.1",
  "openssl",
@@ -676,7 +676,7 @@ dependencies = [
 [[package]]
 name = "config"
 version = "0.1.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "anyhow",
  "bitflags 1.3.2",
@@ -1052,7 +1052,7 @@ dependencies = [
 [[package]]
 name = "filedescriptor"
 version = "0.8.3"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "libc",
  "thiserror 1.0.69",
@@ -1357,9 +1357,9 @@ dependencies = [
 
 [[package]]
 name = "gif"
-version = "0.13.2"
+version = "0.13.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fcc37f9a2bfe731e69f1e08d29d91d30604b9ce24bcb2880a961e82d89c6ed89"
+checksum = "4ae047235e33e2829703574b54fdec96bfbad892062d97fed2f76022287de61b"
 dependencies = [
  "color_quant",
  "weezl",
@@ -2009,7 +2009,7 @@ dependencies = [
 [[package]]
 name = "luahelper"
 version = "0.1.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "bstr",
  "log",
@@ -2608,7 +2608,7 @@ dependencies = [
 [[package]]
 name = "portable-pty"
 version = "0.9.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "anyhow",
  "bitflags 1.3.2",
@@ -2686,7 +2686,7 @@ dependencies = [
 [[package]]
 name = "promise"
 version = "0.2.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "anyhow",
  "async-executor",
@@ -3307,7 +3307,7 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 [[package]]
 name = "steel-core"
 version = "0.7.0"
-source = "git+https://github.com/mattwparas/steel.git#6c36cd938f739c7c00814910f865e0f287e84f49"
+source = "git+https://github.com/mattwparas/steel.git#790e1a95f560cb8d847a9e1709b1ba0f199f5980"
 dependencies = [
  "abi_stable",
  "anyhow",
@@ -3358,7 +3358,7 @@ dependencies = [
 [[package]]
 name = "steel-derive"
 version = "0.6.0"
-source = "git+https://github.com/mattwparas/steel.git#6c36cd938f739c7c00814910f865e0f287e84f49"
+source = "git+https://github.com/mattwparas/steel.git#790e1a95f560cb8d847a9e1709b1ba0f199f5980"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -3368,7 +3368,7 @@ dependencies = [
 [[package]]
 name = "steel-gen"
 version = "0.3.0"
-source = "git+https://github.com/mattwparas/steel.git#6c36cd938f739c7c00814910f865e0f287e84f49"
+source = "git+https://github.com/mattwparas/steel.git#790e1a95f560cb8d847a9e1709b1ba0f199f5980"
 dependencies = [
  "codegen",
  "serde",
@@ -3377,7 +3377,7 @@ dependencies = [
 [[package]]
 name = "steel-parser"
 version = "0.7.0"
-source = "git+https://github.com/mattwparas/steel.git#6c36cd938f739c7c00814910f865e0f287e84f49"
+source = "git+https://github.com/mattwparas/steel.git#790e1a95f560cb8d847a9e1709b1ba0f199f5980"
 dependencies = [
  "compact_str",
  "fxhash",
@@ -3405,7 +3405,6 @@ dependencies = [
  "portable-pty 0.8.1",
  "steel-core",
  "tokio",
- "wezterm-cell",
  "wezterm-term",
 ]
 
@@ -3522,7 +3521,7 @@ dependencies = [
 [[package]]
 name = "termwiz"
 version = "0.24.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "anyhow",
  "bitflags 2.9.1",
@@ -3759,7 +3758,7 @@ dependencies = [
 [[package]]
 name = "umask"
 version = "0.1.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "lazy_static",
  "libc",
@@ -3860,7 +3859,7 @@ checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 [[package]]
 name = "vtparse"
 version = "0.7.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "utf8parse",
 ]
@@ -3969,7 +3968,7 @@ checksum = "a751b3277700db47d3e574514de2eced5e54dc8a5436a3bf7a0b248b2cee16f3"
 [[package]]
 name = "wezterm-bidi"
 version = "0.2.3"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "log",
  "wezterm-dynamic",
@@ -3978,7 +3977,7 @@ dependencies = [
 [[package]]
 name = "wezterm-blob-leases"
 version = "0.1.1"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "getrandom 0.3.3",
  "mac_address",
@@ -3991,7 +3990,7 @@ dependencies = [
 [[package]]
 name = "wezterm-cell"
 version = "0.1.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "finl_unicode",
  "image",
@@ -4010,7 +4009,7 @@ dependencies = [
 [[package]]
 name = "wezterm-char-props"
 version = "0.1.3"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "phf",
  "serde",
@@ -4020,7 +4019,7 @@ dependencies = [
 [[package]]
 name = "wezterm-color-types"
 version = "0.3.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "csscolorparser",
  "deltae",
@@ -4032,7 +4031,7 @@ dependencies = [
 [[package]]
 name = "wezterm-config-derive"
 version = "0.1.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4042,7 +4041,7 @@ dependencies = [
 [[package]]
 name = "wezterm-dynamic"
 version = "0.2.1"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "log",
  "ordered-float 4.6.0",
@@ -4054,7 +4053,7 @@ dependencies = [
 [[package]]
 name = "wezterm-dynamic-derive"
 version = "0.1.1"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4064,7 +4063,7 @@ dependencies = [
 [[package]]
 name = "wezterm-escape-parser"
 version = "0.1.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "base64",
  "bitflags 2.9.1",
@@ -4091,7 +4090,7 @@ dependencies = [
 [[package]]
 name = "wezterm-input-types"
 version = "0.1.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "bitflags 1.3.2",
  "euclid",
@@ -4102,7 +4101,7 @@ dependencies = [
 [[package]]
 name = "wezterm-ssh"
 version = "0.4.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "anyhow",
  "async_ossl",
@@ -4131,7 +4130,7 @@ dependencies = [
 [[package]]
 name = "wezterm-surface"
 version = "0.1.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "bitflags 2.9.1",
  "fancy-regex",
@@ -4153,7 +4152,7 @@ dependencies = [
 [[package]]
 name = "wezterm-term"
 version = "0.1.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "anyhow",
  "bitflags 1.3.2",
@@ -4184,7 +4183,7 @@ dependencies = [
 [[package]]
 name = "wezterm-uds"
 version = "0.1.0"
-source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#29a68d85d55db2a284bb4d32f5167bbb7fefcb23"
+source = "git+https://github.com/mattwparas/wezterm.git?branch=mwp-public-scroll#7d404b49b22364d2fc8291b950bbf1459b613f22"
 dependencies = [
  "async-io 2.4.1",
  "uds_windows",
