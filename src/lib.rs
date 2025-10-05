@@ -321,34 +321,6 @@ fn create_module() -> FFIModule {
             term.last_cell = None;
         })
         .register_fn("vte/advance-iterator!", |term: &mut VirtualTerminal| {
-            /*
-            // Attempt to grab at (x, y)
-            term.last_cell = term
-                .terminal
-                .screen_mut()
-                .get_cell(term.screen_iterator.x, term.screen_iterator.y)
-                .cloned();
-
-            // If there is nothing there, move to the next row, attempt
-            // to grab something. (0, y + 1)
-            if term.last_cell.is_none() {
-                term.screen_iterator.y += 1;
-                term.screen_iterator.x = 0;
-
-                term.last_cell = term
-                    .terminal
-                    .screen_mut()
-                    .get_cell(term.screen_iterator.x, term.screen_iterator.y)
-                    .cloned();
-            }
-
-            term.screen_iterator.x += 1;
-
-            let ret = term.last_cell.is_some();
-
-            ret
-            */
-
             let size = term.terminal.get_size();
 
             let (rows, cols) = (size.rows as i64 + term.scroll_up_modifier, size.cols);
@@ -418,25 +390,15 @@ fn create_module() -> FFIModule {
                         if let Some(attr) =
                             as_underlying_ffi_type::<TermColorAttribute>(custom.get_mut())
                         {
-                            attr.0 = cell.attrs().to_owned().background();
-
-                            // return true.into_ffi_val();
-                        } else {
-                            // return false.into_ffi_val();
+                            attr.0 = cell.attrs().background();
                         }
-                    } else {
-                        // return false.into_ffi_val();
                     }
-                } else {
-                    // false.into_ffi_val()
-                }
 
-                if let Some(cell) = &term.last_cell {
                     if let FFIArg::CustomRef(CustomRef { mut custom, .. }) = fg {
                         if let Some(attr) =
                             as_underlying_ffi_type::<TermColorAttribute>(custom.get_mut())
                         {
-                            attr.0 = cell.attrs().to_owned().foreground();
+                            attr.0 = cell.attrs().foreground();
 
                             return true.into_ffi_val();
                         } else {
@@ -445,9 +407,9 @@ fn create_module() -> FFIModule {
                     } else {
                         return false.into_ffi_val();
                     }
-                } else {
-                    false.into_ffi_val()
                 }
+
+                true.into_ffi_val()
             },
         )
         .register_fn(
