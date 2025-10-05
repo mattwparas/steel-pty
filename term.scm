@@ -485,8 +485,7 @@
              ;; TODO: Merge all of these calls into one to save a
              ;; few round trips. And then, batch the calls based
              ;; coalescing the styles across the cells.
-             (define str (vte/iter-cell-str-set-str! *vte* cell-str))
-             (when str
+             (when (vte/iter-cell-str-set-str! *vte* cell-str)
                (vte/iter-cell-bg-fg-set-attr! *vte* cell-bg cell-fg)
                (cell-fg-bg->style style-cursor color-cursor-fg color-cursor-bg cell-fg cell-bg)
                ;; TODO: Batch the writes row wise. If the styles are the same,
