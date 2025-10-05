@@ -320,23 +320,19 @@ fn create_module() -> FFIModule {
             term.screen_iterator.y = term.scroll_up_modifier;
             term.last_cell = None;
         })
+        // This should move forward until we actually have something meaningful,
+        // rather than arbitrarily stepping forward one step.
         .register_fn("vte/advance-iterator!", |term: &mut VirtualTerminal| {
             let size = term.terminal.get_size();
 
             let (rows, cols) = (size.rows as i64 + term.scroll_up_modifier, size.cols);
 
-            // If we still have something to snag,
             if term.screen_iterator.x < cols && term.screen_iterator.y < rows {
                 term.last_cell = term
                     .terminal
                     .screen_mut()
                     .get_cell_scrollback(term.screen_iterator.x, term.screen_iterator.y as _)
                     .cloned();
-
-                // let line_idx = term.terminal.screen_mut().phys_row(row as i64);
-
-                // let line = term.terminal.screen_mut().lines.get_mut(line_idx)?;
-                // term.last_cell = line.cells_mut().get(term.screen_iterator.x);
 
                 term.screen_iterator.x += 1;
                 return true;
@@ -357,6 +353,52 @@ fn create_module() -> FFIModule {
 
             false
         })
+        // Advance until there is a string?
+        .register_fn(
+            "vte/advance-iterator-until-string!",
+            |term: &mut VirtualTerminal| {
+                let size = term.terminal.get_size();
+
+                let (rows, cols) = (size.rows as i64 + term.scroll_up_modifier, size.cols);
+
+                loop {
+                    if term.screen_iterator.x < cols && term.screen_iterator.y < rows {
+                        let last_cell = term.terminal.screen_mut().get_cell_scrollback(
+                            term.screen_iterator.x,
+                            term.screen_iterator.y as _,
+                        );
+
+                        term.screen_iterator.x += 1;
+
+                        if last_cell.is_some() {
+                            term.last_cell = last_cell.cloned();
+                            return true;
+                        } else {
+                            continue;
+                        }
+                    }
+
+                    if term.screen_iterator.x >= cols && term.screen_iterator.y < rows {
+                        let last_cell = term.terminal.screen_mut().get_cell_scrollback(
+                            term.screen_iterator.x,
+                            term.screen_iterator.y as _,
+                        );
+
+                        term.screen_iterator.x = 0;
+                        term.screen_iterator.y += 1;
+
+                        if last_cell.is_some() {
+                            term.last_cell = last_cell.cloned();
+                            return true;
+                        } else {
+                            continue;
+                        }
+                    } else {
+                        return false;
+                    }
+                }
+            },
+        )
         .register_fn("vte/iter-x", |term: &VirtualTerminal| {
             term.screen_iterator.x
         })
