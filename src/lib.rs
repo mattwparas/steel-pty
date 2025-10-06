@@ -399,6 +399,55 @@ fn create_module() -> FFIModule {
                 }
             },
         )
+        .register_fn(
+            "vte/advance-iterator-and-update-cells!",
+            |term: &mut VirtualTerminal, mut_str: RMut<'_, RString>, bg: FFIArg, fg: FFIArg| {
+                let size = term.terminal.get_size();
+
+                let (rows, cols) = (size.rows as i64 + term.scroll_up_modifier, size.cols);
+
+                loop {
+                    if term.screen_iterator.x < cols && term.screen_iterator.y < rows {
+                        let last_cell = term.terminal.screen_mut().get_cell_scrollback(
+                            term.screen_iterator.x,
+                            term.screen_iterator.y as _,
+                        );
+
+                        term.screen_iterator.x += 1;
+
+                        if let Some(cell) = last_cell {
+                            // term.last_cell = last_cell.cloned();
+                            update_cell(cell, mut_str, bg, fg);
+
+                            return true;
+                        } else {
+                            continue;
+                        }
+                    }
+
+                    if term.screen_iterator.x >= cols && term.screen_iterator.y < rows {
+                        let last_cell = term.terminal.screen_mut().get_cell_scrollback(
+                            term.screen_iterator.x,
+                            term.screen_iterator.y as _,
+                        );
+
+                        term.screen_iterator.x = 0;
+                        term.screen_iterator.y += 1;
+
+                        if let Some(cell) = last_cell {
+                            // term.last_cell = last_cell.cloned();
+                            update_cell(cell, mut_str, bg, fg);
+
+                            return true;
+                        } else {
+                            continue;
+                        }
+                    } else {
+                        return false;
+                    }
+                }
+            },
+        )
         .register_fn("vte/iter-x", |term: &VirtualTerminal| {
             term.screen_iterator.x
         })
@@ -518,6 +567,40 @@ fn create_module() -> FFIModule {
                 }
             },
         )
+        // Batch all of the updates, less round trips across the FFI barrier
+        .register_fn(
+            "vte/iter-cell-bg-fg-set-attr-str!",
+            |term: &VirtualTerminal, mut mut_str: RMut<'_, RString>, bg: FFIArg, fg: FFIArg| {
+                if let Some(cell) = &term.last_cell {
+                    mut_str.get_mut().clear();
+                    mut_str.get_mut().push_str(cell.str());
+
+                    if let FFIArg::CustomRef(CustomRef { mut custom, .. }) = bg {
+                        if let Some(attr) =
+                            as_underlying_ffi_type::<TermColorAttribute>(custom.get_mut())
+                        {
+                            attr.0 = cell.attrs().background();
+                        }
+                    }
+
+                    if let FFIArg::CustomRef(CustomRef { mut custom, .. }) = fg {
+                        if let Some(attr) =
+                            as_underlying_ffi_type::<TermColorAttribute>(custom.get_mut())
+                        {
+                            attr.0 = cell.attrs().foreground();
+
+                            return true.into_ffi_val();
+                        } else {
+                            return false.into_ffi_val();
+                        }
+                    } else {
+                        return false.into_ffi_val();
+                    }
+                }
+
+                true.into_ffi_val()
+            },
+        )
         .register_fn("vte/scroll-up", |term: &mut VirtualTerminal| {
             term.scroll_up_modifier = (term.scroll_up_modifier - 1)
                 .max(0 - term.terminal.screen().scrollback_rows() as i64);
@@ -527,6 +610,23 @@ fn create_module() -> FFIModule {
         });
 
     module
+}
+
+fn update_cell(cell: &Cell, mut mut_str: RMut<'_, RString>, bg: FFIArg, fg: FFIArg) {
+    mut_str.get_mut().clear();
+    mut_str.get_mut().push_str(cell.str());
+
+    if let FFIArg::CustomRef(CustomRef { mut custom, .. }) = bg {
+        if let Some(attr) = as_underlying_ffi_type::<TermColorAttribute>(custom.get_mut()) {
+            attr.0 = cell.attrs().background();
+        }
+    }
+
+    if let FFIArg::CustomRef(CustomRef { mut custom, .. }) = fg {
+        if let Some(attr) = as_underlying_ffi_type::<TermColorAttribute>(custom.get_mut()) {
+            attr.0 = cell.attrs().foreground();
+        }
+    }
 }
 
 struct TermColorAttribute(ColorAttribute);

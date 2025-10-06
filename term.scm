@@ -29,6 +29,7 @@
                           vte/reset-iterator!
                           vte/advance-iterator!
                           vte/advance-iterator-until-string!
+                          vte/advance-iterator-and-update-cells!
                           vte/iter-x
                           vte/iter-y
                           vte/iter-cell-fg
@@ -98,11 +99,9 @@
 (define fg-attr (ffi-vector #f #f #f #f))
 
 ;; Save Color around rather than allocate a new one each time
-(define (attribute->color attr bg/fg base-color fg?)
+(define (attribute->color attr bg/fg base-color fg? base-color-fg)
   (cond
     [(int? attr)
-     ; (log::info! "Getting here")
-     ;; TODO: Figure out why this seems kinda busted?
      (set-color-indexed! base-color attr)
      base-color]
 
@@ -115,21 +114,24 @@
      base-color]
 
     ; base-color
-    [else
-     (if fg?
-         (style->fg (theme->fg *helix.cx*))
-         base-color)]))
+    [else (if fg? base-color-fg base-color)]))
 
-(define (cell-fg-bg->style base-style base-color-fg base-color-bg fg bg)
-  (set-style-bg!
-   base-style
-   (or (attribute->color (term/color-attribute-set! bg bg-attr) bg-attr base-color-bg #f)
-       Color/Black))
+(define (cell-fg-bg->style base-style base-color-fg base-color-bg fg bg theme-base-color-fg)
+  (set-style-bg! base-style
+                 (or (attribute->color (term/color-attribute-set! bg bg-attr)
+                                       bg-attr
+                                       base-color-bg
+                                       #f
+                                       theme-base-color-fg)
+                     Color/Black))
 
-  (set-style-fg!
-   base-style
-   (or (attribute->color (term/color-attribute-set! fg fg-attr) fg-attr base-color-fg #t)
-       Color/White)))
+  (set-style-fg! base-style
+                 (or (attribute->color (term/color-attribute-set! fg fg-attr)
+                                       fg-attr
+                                       base-color-fg
+                                       #t
+                                       theme-base-color-fg)
+                     Color/White)))
 
 (define (for-each func lst)
   (if (null? lst)
@@ -473,6 +475,7 @@
 
     (define cell-fg (Terminal-cell-fg state))
     (define cell-bg (Terminal-cell-bg state))
+    (define theme-base-color-fg (style->fg (theme->fg *helix.cx*)))
 
     ;; Keep a record of the state of the area for the event handler.
     (set-box! (Terminal-area state) block-area)
@@ -492,21 +495,18 @@
       ;; Start at 0
       (vte/reset-iterator! *vte*)
 
-      ;; Advancing the iterator
-      (while (vte/advance-iterator-until-string! *vte*)
-             ;; TODO: Merge all of these calls into one to save a
-             ;; few round trips. And then, batch the calls based
-             ;; coalescing the styles across the cells.
-             (when (vte/iter-cell-str-set-str! *vte* cell-str)
-               (vte/iter-cell-bg-fg-set-attr! *vte* cell-bg cell-fg)
-               (cell-fg-bg->style style-cursor color-cursor-fg color-cursor-bg cell-fg cell-bg)
-               ;; TODO: Batch the writes row wise. If the styles are the same,
-               ;; we can batch the style along the way.
-               (frame-set-string! frame
-                                  (+ x-offset (vte/iter-x *vte*))
-                                  (+ y-offset (vte/iter-y *vte*))
-                                  cell-str
-                                  style-cursor))))
+      (while (vte/advance-iterator-and-update-cells! *vte* cell-str cell-bg cell-fg)
+             (cell-fg-bg->style style-cursor
+                                color-cursor-fg
+                                color-cursor-bg
+                                cell-fg
+                                cell-bg
+                                theme-base-color-fg)
+             (frame-set-string! frame
+                                (+ x-offset (vte/iter-x *vte*))
+                                (+ y-offset (vte/iter-y *vte*))
+                                cell-str
+                                style-cursor)))
 
     ;; (log::info! (to-string "Rendering time: " (duration->string (instant/elapsed now))))
 
