@@ -282,9 +282,7 @@
 
   (define add-cursor
     (lambda (t)
-      (if (Terminal-cursor-handler term)
-          (hash-insert t "cursor" (Terminal-cursor-handler term))
-          t)))
+      (if (Terminal-cursor-handler term) (hash-insert t "cursor" (Terminal-cursor-handler term)) t)))
   (~> (hash) add-handle add-cursor))
 
 (define (show-term term)
@@ -364,10 +362,7 @@
   (define x-term (unbox (Terminal-x-term state)))
   (define y-term (unbox (Terminal-y-term state)))
 
-  (define x
-    (if x-term
-        (- x-term left-shift)
-        (- (round (* 3/4 (area-width rect))) left-shift)))
+  (define x (if x-term (- x-term left-shift) (- (round (* 3/4 (area-width rect))) left-shift)))
 
   ;; Halfway down
   (define y (or y-term (round (* 0/4 (area-height rect)))))
@@ -435,10 +430,7 @@
     [else calculated-area]))
 
 (define terminal-cursor-handler
-  (lambda (state _)
-    (if (unbox (Terminal-focused? state))
-        (Terminal-cursor state)
-        #f)))
+  (lambda (state _) (if (unbox (Terminal-focused? state)) (Terminal-cursor state) #f)))
 
 ;; Renders the terminal. The renderer is implemented primarily as a cursor
 ;; over the cells of the terminal, translated from the underlying
@@ -467,7 +459,8 @@
     ; (define color-cursor-bg (Terminal-color-cursor-bg state))
 
     (define color-cursor-fg (style->fg (theme->fg *helix.cx*)))
-    (define color-cursor-bg (style->bg (theme->bg *helix.cx*)))
+    ;; If the background is missing?
+    (define color-cursor-bg (or (style->bg (theme->bg *helix.cx*)) Color/Black))
 
     (define *vte* (Terminal-*vte* state))
     (define cursor (Terminal-cursor state))
