@@ -117,13 +117,14 @@
     [else (if fg? base-color-fg base-color)]))
 
 (define (cell-fg-bg->style base-style base-color-fg base-color-bg fg bg theme-base-color-fg)
-  (set-style-bg! base-style
-                 (or (attribute->color (term/color-attribute-set! bg bg-attr)
-                                       bg-attr
-                                       base-color-bg
-                                       #f
-                                       theme-base-color-fg)
-                     Color/Black))
+  (when base-color-bg
+    (set-style-bg! base-style
+                   (or (attribute->color (term/color-attribute-set! bg bg-attr)
+                                         bg-attr
+                                         base-color-bg
+                                         #f
+                                         theme-base-color-fg)
+                       Color/Black)))
 
   (set-style-fg! base-style
                  (or (attribute->color (term/color-attribute-set! fg fg-attr)
@@ -460,7 +461,7 @@
 
     (define color-cursor-fg (or (style->fg (theme->fg *helix.cx*)) Color/White))
     ;; If the background is missing?
-    (define color-cursor-bg (or (style->bg (theme->bg *helix.cx*)) Color/Black))
+    (define color-cursor-bg (style->bg (theme->bg *helix.cx*)))
 
     (define *vte* (Terminal-*vte* state))
     (define cursor (Terminal-cursor state))
