@@ -458,7 +458,7 @@
     ; (define color-cursor-fg (Terminal-color-cursor-fg state))
     ; (define color-cursor-bg (Terminal-color-cursor-bg state))
 
-    (define color-cursor-fg (style->fg (theme->fg *helix.cx*)))
+    (define color-cursor-fg (or (style->fg (theme->fg *helix.cx*)) Color/White))
     ;; If the background is missing?
     (define color-cursor-bg (or (style->bg (theme->bg *helix.cx*)) Color/Black))
 
