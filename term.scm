@@ -596,6 +596,8 @@
 
      event-result/ignore]))
 
+(define ctrl-l (string->key-event "C-l"))
+
 ;; Event handler for the terminal.
 ;; This primarily focuses on forwarding the key events
 ;; and the mouse events down to the underlying terminal
@@ -613,6 +615,12 @@
     [(unbox (Terminal-focused? state))
 
      (cond
+
+       ;; TODO: Add custom key bindings for this
+       [(and char (equal? (event->key-event event) ctrl-l))
+        (pty-process-send-command *pty-process* "clear\n")
+        event-result/consume]
+
        ;; Backspace
        [(key-event-backspace? event)
 
