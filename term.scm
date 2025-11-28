@@ -608,6 +608,16 @@
   (define *pty-process* (Terminal-*pty-process* state))
   (define *vte* (Terminal-*vte* state))
   (define now (instant/now))
+  (define (handle-ctrl-char hex-val event)
+   (if (equal? (key-event-modifier event) key-modifier-ctrl)
+       (begin
+         (pty-process-send-command *pty-process* hex-val)
+         event-result/consume)
+
+       (begin
+         (pty-process-send-command-char *pty-process* char)
+         event-result/consume))
+    )
 
   (cond
     ;; If the terminal is focused, we are going to
@@ -641,16 +651,16 @@
               event-result/consume))]
 
        [(equal? char #\c)
+        (handle-ctrl-char "\x03;" event)]
 
-        (if (equal? (key-event-modifier event) key-modifier-ctrl)
-            (begin
-              (pty-process-send-command *pty-process* "\x03;")
-              event-result/consume)
+       [(equal? char #\r)
+        (handle-ctrl-char "\x12;" event)]
 
-            (begin
+       [(equal? char #\n)
+        (handle-ctrl-char "\x0E;" event)]
 
-              (pty-process-send-command-char *pty-process* char)
-              event-result/consume))]
+       [(equal? char #\p)
+        (handle-ctrl-char "\x10;" event)]
 
        [(key-event-enter? event)
         (pty-process-send-command *pty-process* "\r")
