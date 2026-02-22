@@ -322,6 +322,24 @@
 
 (define *terminal-fraction* (/ 1 3))
 
+;;@doc
+;; Resize the terminal window
+;; ```scheme
+;; (set-terminal-fraction fract)
+;; ```
+(provide set-terminal-fraction)
+(define (set-terminal-fraction fract)
+  (set! stashed-area #f)
+  (set! *terminal-fraction* fract))
+
+;;@doc
+;; Resize the terminal window
+;; :set-terminal-width-window numerator denominator
+(provide set-terminal-width-window)
+(define (set-terminal-width-window numerator denominator)
+  (set! stashed-area #f)
+  (set! *terminal-fraction* (/ (string->int numerator) (string->int denominator))))
+
 ;; Do as a percentage of the terminal area, rather
 ;; than a fixed size
 (define (alternative-calculate-area state rect)
